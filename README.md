@@ -2,7 +2,7 @@
 
 A Discord bot that measures, forecasts and alerts on stock volatility. Each server keeps its own watchlist. Every trading day after the close, the bot posts a report for each ticker with four volatility estimators, a chart, a GARCH forecast and the gap between implied and realized volatility. It also alerts the channel when a stock's volatility moves into a new regime.
 
-<!-- Add a screenshot of a real report here, e.g. ![Report](docs/report.png) -->
+![A /vol report for NVDA](docs/report.png)
 
 ## Commands
 
