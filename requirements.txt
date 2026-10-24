@@ -1,0 +1,8 @@
+discord.py>=2.3
+yfinance>=0.2.40
+pandas>=2.0
+numpy>=1.26
+pandas_market_calendars>=4.4
+python-dotenv>=1.0
+matplotlib>=3.8
+arch>=6.3
