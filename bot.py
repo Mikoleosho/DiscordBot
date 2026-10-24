@@ -5,6 +5,7 @@ import numpy as np
 import pandas_market_calendars as mcal 
 import yfinance as yf 
 from datetime import datetime, time
+from typing import Optional
 from zoneinfo import ZoneInfo
 import os 
 from dotenv import load_dotenv 
@@ -318,7 +319,7 @@ class VolatilityReporter(commands.Cog):
 
     # AI-added command
     @app_commands.command(name="accuracy", description="How GARCH forecasts have scored against a naive benchmark")
-    async def accuracy(self, interaction: discord.Interaction, ticker: str | None = None):
+    async def accuracy(self, interaction: discord.Interaction, ticker: Optional[str] = None):
         ticker = ticker.upper() if ticker else None
         stats = forecast.accuracy(db_path, ticker)
         scope = ticker or "all tickers"
