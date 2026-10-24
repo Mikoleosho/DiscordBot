@@ -29,7 +29,7 @@ A Discord bot that measures, forecasts and alerts on stock volatility. Each serv
 
 **Regime:** low (bottom 25% of the past year), normal, or high (top 25%).
 
-**GARCH(1,1) forecast:** expected average volatility over the next 5 trading days, fit on 3 years of returns. "Persistence" (α + β) shows how slowly volatility shocks fade.
+**GARCH(1,1) forecast:** expected average volatility over the next 5 trading days, fit on 3 years of returns with Student-t errors, which allow for occasional extreme days. "Persistence" (α + β) shows how slowly volatility shocks fade.
 
 **Implied vs. realized:** at-the-money implied volatility from the options expiry closest to 30 days out, compared with 20-day realized volatility. A positive spread means options are pricing in more movement than the stock has recently shown.
 

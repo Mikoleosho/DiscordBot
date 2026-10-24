@@ -40,7 +40,7 @@ def log_returns(df):
 def garch_forecast(df, horizon=FORECAST_HORIZON):
     """Average annualized volatility GARCH(1,1) expects over the next `horizon` days."""
     r = log_returns(df) * 100  # percent returns help the optimizer converge
-    model = arch_model(r, mean="Constant", vol="GARCH", p=1, q=1, dist="normal")
+    model = arch_model(r, mean="Constant", vol="GARCH", p=1, q=1, dist="t")  # Student-t: expects occasional extreme days
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")  # arch warns on slow convergence; the fit is still usable
         res = model.fit(disp="off")
