@@ -1,8 +1,24 @@
 # VolBot: Discord Stock Volatility Bot
 
+[![tests](https://github.com/Mikoleosho/DiscordBot/actions/workflows/tests.yml/badge.svg)](https://github.com/Mikoleosho/DiscordBot/actions/workflows/tests.yml)
+![Python](https://img.shields.io/badge/python-3.11-blue)
+![discord.py](https://img.shields.io/badge/discord.py-2.x-5865F2)
+![GARCH](https://img.shields.io/badge/model-GARCH(1%2C1)-orange)
+
 A Discord bot that measures, forecasts and alerts on stock volatility. Each server keeps its own watchlist. Every trading day after the close, the bot posts a report for each ticker with four volatility estimators, a chart, a GARCH forecast and the gap between implied and realized volatility. It also alerts the channel when a stock's volatility moves into a new regime.
 
 ![A /vol report for NVDA](docs/report.png)
+
+## Highlights
+
+- **Four realized-volatility estimators** (Close-to-Close, Parkinson, Garman-Klass, Yang-Zhang) computed from daily OHLC data
+- **GARCH(1,1) forecasts** with Student-t errors, fit on 3 years of returns
+- **Live forecast scoring:** every forecast is logged and checked against what actually happened, against a naive benchmark
+- **Implied vs. realized volatility** from the options chain
+- **Regime alerts** during market hours, with per-server watchlists stored in SQLite
+- **17 automated tests** that run on every push
+
+**Tech stack:** Python, discord.py, pandas, NumPy, arch, yfinance, matplotlib, SQLite, pytest, GitHub Actions
 
 ## Commands
 
@@ -43,6 +59,17 @@ During market hours the bot checks the watchlist every 30 minutes and posts when
 
 Every report logs a GARCH forecast alongside a naive benchmark (today's 20-day realized volatility). Five trading days later, each forecast is scored against what actually happened. `/accuracy` reports RMSE, MAE and how often GARCH was closer than the benchmark, so the model has to prove itself on live data.
 
+## Project structure
+
+```
+bot.py        Discord bot: slash commands, watchlist, estimators, chart, daily report and alerts
+forecast.py   GARCH(1,1) forecasts, forecast logging and scoring
+implied.py    At-the-money implied volatility from the options chain
+regime.py     Regime classification and regime-change alerts
+tests/        pytest suite (runs offline with simulated prices)
+docs/         Screenshots
+```
+
 ## Setup
 
 ```bash
@@ -76,5 +103,10 @@ The tests simulate prices with a known volatility and check that each estimator 
 - `implied.py`: at-the-money implied volatility from the options chain
 - `regime.py`: regime classification and regime-change alerts
 - `tests/`: the whole test suite
+- `.github/workflows/tests.yml`: the GitHub Actions test workflow
 - This README, `requirements.txt`, `requirements-dev.txt` and `.gitignore`
 - Fixes to my code in `bot.py`, each marked with an `AI change` or `AI-added` comment: dropping today's unfinished bar, moving the daily report to 4:15 PM, fetching 3 years of history, looking up the watchlist by the channel's server, reusing analysis in alerts instead of downloading twice, a clear startup error for missing settings, and correct percentile suffixes ("21st")
+
+## Contact
+
+Michael Koleosho · University of Pennsylvania, BSE in Artificial Intelligence & Electrical Engineering · [LinkedIn](https://www.linkedin.com/in/morayo-koleosho-b08b5023a) · Koleosho@engineering.upenn.edu
